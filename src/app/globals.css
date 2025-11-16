@@ -1,0 +1,20 @@
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.nav-btn {
+  @apply text-gray-700 hover:text-blue-700 transition font-medium;
+}
+
+.primary-btn {
+  @apply px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition;
+}
+
+.login-btn {
+  @apply px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-200 transition;
+}
+
+.logout-btn {
+  @apply px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition;
+}
