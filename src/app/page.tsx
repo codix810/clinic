@@ -1,15 +1,31 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import "./globals.css";
 
 export default function Home() {
   const router = useRouter();
+  const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch("/api/auth/me");
+
+        if (res.ok) {
+          const data = await res.json();
+          setUser(data);
+        }
+      } catch {}
+      setLoading(false);
+    };
+    load();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
 
-    
 
       {/* HERO */}
       <section className="flex flex-col lg:flex-row items-center justify-between max-w-7xl mx-auto px-6 pt-20 pb-24 gap-12">
@@ -25,21 +41,78 @@ export default function Home() {
             خدمة حجز طبي متطورة — سرعة، دقة، تجربة مريحة، واستفسارات فورية مع متابعة لحظية.
           </p>
 
-          <div className="flex justify-end gap-4 flex-wrap">
-            <button
-              onClick={() => router.push("/booking")}
-              className="px-8 py-3 bg-blue-600 text-white text-lg rounded-xl hover:bg-blue-700 transition shadow-md active:scale-[.97]"
-            >
-              احجز الآن
-            </button>
+          {!loading && (
+            <>
+              {/* زائر */}
+              {!user && (
+                <div className="flex justify-end gap-4 flex-wrap">
+                  <button
+                    onClick={() => router.push("/login")}
+                    className="px-8 py-3 border border-gray-400 text-gray-800 bg-white text-lg rounded-xl hover:bg-gray-100 transition shadow-sm"
+                  >
+                    تسجيل الدخول
+                  </button>
 
-            <button
-              onClick={() => router.push("/quick-query")}
-              className="px-8 py-3 bg-green-600 text-white text-lg rounded-xl hover:bg-green-700 transition shadow-md active:scale-[.97]"
-            >
-              استفسار سريع
-            </button>
-          </div>
+                  <button
+                    onClick={() => router.push("/register")}
+                    className="px-8 py-3 bg-blue-600 text-white text-lg rounded-xl hover:bg-blue-700 transition shadow-md"
+                  >
+                    إنشاء حساب
+                  </button>
+                </div>
+              )}
+
+              {/* مريض */}
+              {user?.role === "patient" && (
+                <div className="flex justify-end gap-4 flex-wrap">
+                  <button
+                    onClick={() => router.push("/booking")}
+                    className="px-8 py-3 bg-blue-600 text-white text-lg rounded-xl hover:bg-blue-700 transition shadow-md"
+                  >
+                    احجز الآن
+                  </button>
+
+                  <button
+                    onClick={() => router.push("/quick-query")}
+                    className="px-8 py-3 bg-green-600 text-white text-lg rounded-xl hover:bg-green-700 transition shadow-md"
+                  >
+                    استفسار سريع
+                  </button>
+
+                  <button
+                    onClick={() => router.push("/profile")}
+                    className="px-8 py-3 bg-gray-700 text-white text-lg rounded-xl hover:bg-gray-800 transition"
+                  >
+                    البروفايل
+                  </button>
+                </div>
+              )}
+
+              {/* دكتور */}
+              {user?.role === "doctor" && (
+                <div className="flex justify-end gap-4 flex-wrap">
+                  <button
+                    onClick={() => router.push("/doctor")}
+                    className="px-8 py-3 bg-purple-600 text-white text-lg rounded-xl hover:bg-purple-700 transition"
+                  >
+                    لوحة الطبيب
+                  </button>
+                </div>
+              )}
+
+              {/* أدمن */}
+              {user?.role === "admin" && (
+                <div className="flex justify-end gap-4 flex-wrap">
+                  <button
+                    onClick={() => router.push("/admin/dashboard")}
+                    className="px-8 py-3 bg-red-600 text-white text-lg rounded-xl hover:bg-red-700 transition"
+                  >
+                    لوحة التحكم
+                  </button>
+                </div>
+              )}
+            </>
+          )}
         </div>
 
         {/* VISUAL */}
@@ -52,7 +125,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SERVICES */}
+  {/* SERVICES */}
       <section className="bg-white py-20 border-t shadow-inner">
         <div className="max-w-7xl mx-auto px-6 text-center">
 
@@ -93,14 +166,14 @@ export default function Home() {
           الطبيب المشرف
         </h3>
         <p className="text-gray-600 max-w-2xl mx-auto text-xl leading-relaxed">
-          د. المنصوري — خبرة قوية في تشخيص وعلاج الحالات الطبية، مع تركيز على تقديم
+          د.  — خبرة قوية في تشخيص وعلاج الحالات الطبية، مع تركيز على تقديم
           أفضل رعاية وتجربة للمريض بدون تعقيد.
         </p>
       </section>
 
       {/* FOOTER */}
       <footer className="bg-gray-200 py-4 text-center text-gray-600 text-sm border-t">
-        © {new Date().getFullYear()} — عيادة المنصوري — جميع الحقوق محفوظة
+        © {new Date().getFullYear()} — عيادة  — جميع الحقوق محفوظة
       </footer>
 
     </div>
