@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { dbConnect } from "../../../../lib/db";
 import User from "../../../../models/User";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 export async function POST(req: Request) {
   try {
@@ -10,7 +11,6 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { name, email, phone, password } = body;
 
-    // Validation
     if (!name || !email || !phone || !password) {
       return NextResponse.json(
         { error: "كل البيانات مطلوبة" },
@@ -18,7 +18,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Check if user exists
     const exist = await User.findOne({ email });
     if (exist) {
       return NextResponse.json(
@@ -27,10 +26,9 @@ export async function POST(req: Request) {
       );
     }
 
-    // Hash Password
     const hashedPassword = bcrypt.hashSync(password, 10);
 
-    // Create User
+    // Create user
     const user = await User.create({
       name,
       email,
@@ -39,11 +37,27 @@ export async function POST(req: Request) {
       role: "patient",
     });
 
-    return NextResponse.json(
+    // Generate JWT Token
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET!,
+      { expiresIn: "30d" }
+    );
+
+    const response = NextResponse.json(
       { message: "تم إنشاء الحساب بنجاح", user: { id: user._id, email: user.email } },
       { status: 201 }
     );
-  } catch (error: any) {
+
+    // Set cookie
+    response.headers.append(
+      "Set-Cookie",
+      `token=${token}; Path=/; HttpOnly; SameSite=Strict; Max-Age=${60 * 60 * 24 * 30}`
+    );
+
+    return response;
+
+  } catch (error) {
     console.error("Register Error:", error);
     return NextResponse.json(
       { error: "حدث خطأ أثناء إنشاء الحساب" },
