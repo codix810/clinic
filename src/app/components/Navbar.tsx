@@ -37,7 +37,7 @@ export default function Navbar() {
           className="text-2xl font-bold text-blue-700 cursor-pointer"
           onClick={() => router.push("/")}
         >
-          عيادة المنصوري
+          عيادة 
         </h1>
 
         {!loading && (
@@ -154,4 +154,3 @@ export default function Navbar() {
   );
 }
 
-/* Tailwind Helper Classes */
