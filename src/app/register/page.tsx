@@ -17,26 +17,28 @@ export default function RegisterPage() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    setError("");
-    setSuccess("");
+const handleSubmit = async (e: any) => {
+  e.preventDefault();
+  setError("");
+  setSuccess("");
 
-    const res = await fetch("/api/auth/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
+  const res = await fetch("/api/auth/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(form),
+  });
 
-    const data = await res.json();
+  const data = await res.json();
 
-    if (!res.ok) {
-      setError(data.error || "حدث خطأ");
-      return;
-    }
+  if (!res.ok) {
+    setError(data.error || "حدث خطأ");
+    return;
+  }
 
-    setSuccess("تم إنشاء الحساب بنجاح!");
-  };
+  // تم التسجيل + تم تسجيل الدخول تلقائيًا
+  window.location.href = "/";
+};
+
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
