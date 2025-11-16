@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = "force-dynamic"; // ← العلاج
+
 import { useSearchParams } from "next/navigation";
 
 export default function Page() {
@@ -21,11 +23,7 @@ export default function Page() {
             stroke="currentColor"
             strokeWidth="2"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M5 13l4 4L19 7"
-            />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
           </svg>
         </div>
 
@@ -33,9 +31,7 @@ export default function Page() {
           تم الحجز بنجاح
         </h1>
 
-        <p className="text-gray-600 text-lg mb-2">
-          كود المتابعة الخاص بك:
-        </p>
+        <p className="text-gray-600 text-lg mb-2">كود المتابعة الخاص بك:</p>
 
         <p className="text-3xl font-extrabold text-blue-700 tracking-widest bg-blue-50 py-3 rounded-xl shadow-inner mb-6">
           {code}
