@@ -2,11 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Stethoscope, X } from "lucide-react";
 
 export default function Navbar() {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const load = async () => {
@@ -22,33 +25,48 @@ export default function Navbar() {
     load();
   }, []);
 
-  const logout = () => {
-    document.cookie = "token=; Max-Age=0; path=/";
-    router.push("/");
-    router.refresh();
-  };
-
   return (
-    <header className="bg-white shadow-md border-b sticky top-0 z-30">
-      <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+    <header className="bg-white/50 shadow-md sticky top-0 z-30">
+      <div className="max-w-6xl mx-auto px-2 py-4 flex justify-between items-center">
 
         {/* LOGO */}
         <h1
-          className="text-2xl font-bold text-blue-700 cursor-pointer"
+          className="text-2xl font-bold text-black cursor-pointer"
           onClick={() => router.push("/")}
         >
-          عيادة 
+          نظام إدارة المواعيد الطبية <span className="bg-cyan-400 rounded-lg">🏥</span>
         </h1>
 
+        {/* Mobile Toggle Button */}
+        <button
+          className="md:hidden text-black cursor-pointer"
+          onClick={() => setOpen(!open)}
+        >
+          {open ? <X size={32} /> : <Stethoscope size={32} />}
+        </button>
+
+        {/* NAVIGATION */}
         {!loading && (
-          <nav className="flex items-center gap-6">
+          <nav
+            className={`
+            absolute md:static left-0 top-20 w-full md:w-auto
+            flex flex-col md:flex-row
+            items-center md:items-center
+            gap-6
+            bg-white md:bg-transparent
+            py-6 md:py-0
+            shadow-md md:shadow-none
+            text-center
 
-            {/* LINKS BASED ON ROLE */}
+            transition-all duration-300
 
+            ${open ? "translate-y-0 opacity-100" : "-translate-y-10 opacity-0 md:opacity-100 md:translate-y-0"}
+            ${open ? "pointer-events-auto" : "pointer-events-none md:pointer-events-auto"}
+          `}
+          >
             {/* زائر */}
             {!user && (
               <>
-
                 <button onClick={() => router.push("/track")} className="nav-btn">
                   متابعة الحجز
                 </button>
@@ -79,17 +97,15 @@ export default function Navbar() {
                 <button onClick={() => router.push("/profile")} className="nav-btn">
                   البروفايل
                 </button>
-
-<button
-  onClick={async () => {
-    await fetch("/api/auth/logout", { method: "POST" });
-    window.location.href = "/";
-  }}
-  className="logout-btn"
->
-  تسجيل الخروج
-</button>
-
+                <button
+                  onClick={async () => {
+                    await fetch("/api/auth/logout", { method: "POST" });
+                    window.location.href = "/";
+                  }}
+                  className="logout-btn"
+                >
+                  تسجيل الخروج
+                </button>
               </>
             )}
 
@@ -99,24 +115,21 @@ export default function Navbar() {
                 <button onClick={() => router.push("/doctor")} className="nav-btn">
                   لوحة الطبيب
                 </button>
-
                 <button onClick={() => router.push("/doctor/bookings")} className="nav-btn">
                   حجوزات اليوم
                 </button>
-
                 <button onClick={() => router.push("/doctor/patients")} className="nav-btn">
                   المرضى
                 </button>
-<button
-  onClick={async () => {
-    await fetch("/api/auth/logout", { method: "POST" });
-    window.location.href = "/";
-  }}
-  className="logout-btn"
->
-  تسجيل الخروج
-</button>
-
+                <button
+                  onClick={async () => {
+                    await fetch("/api/auth/logout", { method: "POST" });
+                    window.location.href = "/";
+                  }}
+                  className="logout-btn"
+                >
+                  تسجيل الخروج
+                </button>
               </>
             )}
 
@@ -126,25 +139,21 @@ export default function Navbar() {
                 <button onClick={() => router.push("/admin/dashboard")} className="nav-btn">
                   لوحة التحكم
                 </button>
-
                 <button onClick={() => router.push("/admin/bookings")} className="nav-btn">
                   إدارة الحجوزات
                 </button>
-
                 <button onClick={() => router.push("/admin/users")} className="nav-btn">
                   المستخدمين
                 </button>
-
-<button
-  onClick={async () => {
-    await fetch("/api/auth/logout", { method: "POST" });
-    window.location.href = "/";
-  }}
-  className="logout-btn"
->
-  تسجيل الخروج
-</button>
-
+                <button
+                  onClick={async () => {
+                    await fetch("/api/auth/logout", { method: "POST" });
+                    window.location.href = "/";
+                  }}
+                  className="logout-btn"
+                >
+                  تسجيل الخروج
+                </button>
               </>
             )}
           </nav>
@@ -153,4 +162,3 @@ export default function Navbar() {
     </header>
   );
 }
-
