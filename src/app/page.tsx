@@ -38,7 +38,7 @@ export default function Home() {
           </h2>
 
           <p className="text-gray-600 text-xl max-w-md leading-relaxed mb-10">
-            خدمة حجز طبي متطورة — سرعة، دقة، تجربة مريحة، واستفسارات فورية مع متابعة لحظية.
+            خدمة حجز طبي متطورة — سرعة، دقة، تجربة مريحة، واستفسارات فورية مع متابعة فورية.
           </p>
 
           {!loading && (
