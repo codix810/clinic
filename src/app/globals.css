@@ -4,17 +4,17 @@
 @tailwind utilities;
 
 .nav-btn {
-  @apply text-gray-700 hover:text-blue-700 transition font-medium;
+  @apply text-gray-500 hover:text-black active:text-cyan-400 cursor-pointer transition font-medium;
 }
 
 .primary-btn {
-  @apply px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition;
+  @apply px-4 py-2 bg-cyan-400 text-white rounded-lg hover:bg-blue-500  cursor-pointer transition;
 }
 
 .login-btn {
-  @apply px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-200 transition;
+  @apply px-4 py-2 border border-gray-300 rounded-lg hover:text-blue-500 hover:bg-gray-50  cursor-pointer transition;
 }
 
 .logout-btn {
-  @apply px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition;
+  @apply px-4 py-2 bg-cyan-400 text-white rounded-lg hover:bg-blue-500 cursor-pointer transition;
 }
