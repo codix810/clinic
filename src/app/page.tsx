@@ -139,7 +139,7 @@ export default function Home() {
           {/* IMAGE */}
           <div className="flex-1 flex justify-center">
             <div className="w-80 h-80 rounded-3xl shadow-2xl shadow-white/20 bg-white/20 backdrop-blur-lg overflow-hidden border border-white/20">
-              <img src="/image/n.jpg" className="w-full h-full object-cover" />
+              <img src="./n.jpg" className="w-full h-full object-cover" />
             </div>
           </div>
         </div>
