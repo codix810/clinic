@@ -88,131 +88,177 @@ useEffect(() => {
 }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-200 via-blue-100 to-cyan-100 p-6">
+    <div className="min-h-screen bg-gray-100 p-6 flex justify-center">
 
-      <form
-        onSubmit={submitBooking}
-        className="bg-white w-full max-w-xl p-8 rounded-3xl shadow-2xl border border-blue-100 space-y-6"
-      >
+      <div className="w-full max-w-6xl">
 
-        <h1 className="text-4xl font-extrabold text-center text-blue-700 mb-2 tracking-tight">
-          احجز كشفك الآن
+        {/* TITLE */}
+        <h1 className="text-5xl font-extrabold text-center text-black leading-relaxed tracking-tight">
+          حجز موعد
         </h1>
 
-        <p className="text-center text-gray-500 -mt-3">
-          حجز سهل – وقتك محفوظ – متابعة فورية
+        <p className="text-center text-gray-600 -mt-2 mb-10 text-lg">
+          يرجى ملء التفاصيل التالية لإكمال الحجز
         </p>
 
-        {error && (
-          <p className="bg-red-100 text-red-700 p-3 rounded-lg text-center font-semibold">
-            {error}
-          </p>
-        )}
-
-        {/* NAME */}
-        <div>
-          <label className="block mb-1 font-semibold text-gray-700">الاسم</label>
-          <input
-            name="name"
-            placeholder="اكتب اسمك"
-            className="w-full p-3 border rounded-xl bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
-            onChange={handleChange}
-          />
-        </div>
-
-        {/* AGE */}
-        <div>
-          <label className="block mb-1 font-semibold text-gray-700">السن</label>
-          <input
-            name="age"
-            type="number"
-            placeholder="السن"
-            className="w-full p-3 border rounded-xl bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
-            onChange={handleChange}
-          />
-        </div>
-
-        {/* PHONE */}
-        <div>
-          <label className="block mb-1 font-semibold text-gray-700">رقم الهاتف</label>
-          <input
-            name="phone"
-            placeholder="01000000000"
-            className="w-full p-3 border rounded-xl bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
-            onChange={handleChange}
-          />
-        </div>
-
-        {/* EMAIL */}
-        <div>
-          <label className="block mb-1 font-semibold text-gray-700">الإيميل</label>
-          <input
-            name="email"
-            placeholder="example@gmail.com"
-            className="w-full p-3 border rounded-xl bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none"
-            onChange={handleChange}
-          />
-        </div>
-
-        {/* TYPE */}
-        <div>
-          <label className="block mb-1 font-semibold text-gray-700">نوع الحجز</label>
-          <select
-            name="type"
-            className="w-full p-3 border rounded-xl bg-white focus:ring-2 focus:ring-blue-500 outline-none"
-            onChange={handleChange}
-          >
-            <option value="clinic">حجز عيادة — 200 جنيه</option>
-            <option value="quick">استفسار سريع — 50 جنيه</option>
-          </select>
-        </div>
-
-        {/* DATETIME PICKER */}
-        <div>
-          <label className="block mb-1 font-semibold text-gray-700">
-            اختار التاريخ والوقت
-          </label>
-          <input
-            type="datetime-local"
-            name="datetime"
-            className="w-full p-3 border rounded-xl bg-white focus:ring-2 focus:ring-blue-500 outline-none"
-            onChange={handleChange}
-          />
-        </div>
-
-        {/* AUTO-DAY */}
-        {form.day && (
-          <p className="text-blue-700 font-bold text-right text-lg">
-            اليوم: {form.day}
-          </p>
-        )}
-
-        {/* NOTES */}
-        <div>
-          <label className="block mb-1 font-semibold text-gray-700">
-            ملاحظات (اختياري)
-          </label>
-          <textarea
-            name="notes"
-            placeholder="معلومات إضافية…"
-            className="w-full p-3 border rounded-xl bg-gray-50 focus:ring-2 focus:ring-blue-400 outline-none min-h-[120px]"
-            onChange={handleChange}
-          ></textarea>
-        </div>
-
-        {/* BUTTON */}
-        <button className="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-xl font-bold text-xl transition shadow-md active:scale-95">
-          تأكيد الحجز
-        </button>
-
-        {/* TRACK CTA */}
-        <p
-          className="text-center text-blue-700 font-bold cursor-pointer hover:underline mt-1"
-          onClick={() => (window.location.href = "/track")}
+        <form
+          onSubmit={submitBooking}
+          className="bg-white/70 backdrop-blur-sm w-full p-10 rounded-3xl shadow-2xl border border-gray-200 space-y-8"
         >
-          متابعة الحجز
-        </p>
-      </form>
+
+          {/* ERROR */}
+          {error && (
+            <p className="bg-red-100 text-red-700 p-4 rounded-lg text-center font-semibold">
+              {error}
+            </p>
+          )}
+
+          {/* INPUTS GRID 1 */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+            {/* NAME */}
+            <div>
+              <label className="block mb-1 font-semibold text-gray-700 text-right">الاسم*</label>
+              <input
+                name="name"
+                placeholder="اكتب اسمك"
+                className="w-full p-3 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-cyan-500 outline-none shadow-sm"
+                onChange={handleChange}
+              />
+            </div>
+
+            {/* AGE */}
+            <div>
+              <label className="block mb-1 font-semibold text-gray-700 text-right">السن*</label>
+              <input
+                name="age"
+                type="number"
+                placeholder="السن"
+                className="w-full p-3 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-cyan-500 outline-none shadow-sm"
+                onChange={handleChange}
+              />
+            </div>
+
+            {/* PHONE */}
+            <div>
+              <label className="block mb-1 font-semibold text-gray-700 text-right">رقم الهاتف*</label>
+              <input
+                name="phone"
+                placeholder="01000000000"
+                className="w-full p-3 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-cyan-500 outline-none shadow-sm"
+                onChange={handleChange}
+              />
+            </div>
+
+            {/* EMAIL */}
+            <div>
+              <label className="block mb-1 font-semibold text-gray-700 text-right">الإيميل*</label>
+              <input
+                name="email"
+                placeholder="example@gmail.com"
+                className="w-full p-3 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-cyan-500 outline-none shadow-sm"
+                onChange={handleChange}
+              />
+            </div>
+
+          </div>
+
+          {/* INPUTS GRID 2 */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+            {/* TYPE */}
+            <div>
+              <label className="block mb-1 font-semibold text-gray-700 text-right">نوع الحجز*</label>
+              <select
+                name="type"
+                className="w-full p-3 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-cyan-500 outline-none shadow-sm"
+                onChange={handleChange}
+              >
+                <option value="clinic">كشف</option>
+                <option value="follow">متابعة</option>
+                <option value="quick">استشارة</option>
+              </select>
+            </div>
+
+            {/* الكشف */}
+            <div>
+              <label className="block mb-1 font-semibold text-gray-700 text-right">نوع الكشف*</label>
+              <select
+                name="method"
+                className="w-full p-3 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-cyan-500 outline-none shadow-sm"
+                onChange={handleChange}
+              >
+                <option value="online">اونلاين</option>
+                <option value="clinic">في العيادة</option>
+              </select>
+            </div>
+
+            {/* الفرع */}
+            <div>
+              <label className="block mb-1 font-semibold text-gray-700 text-right">اختر الفرع*</label>
+              <select
+                name="branch"
+                className="w-full p-3 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-cyan-500 outline-none shadow-sm"
+                onChange={handleChange}
+              >
+                <option>القاهرة</option>
+                <option>الجيزة</option>
+                <option>الإسكندرية</option>
+              </select>
+            </div>
+          </div>
+
+          {/* DATE & TIME */}
+          <div>
+            <label className="block mb-1 font-semibold text-gray-700 text-right">
+              اختر التاريخ والوقت*
+            </label>
+            <input
+              type="datetime-local"
+              name="datetime"
+              className="w-full p-3 border border-gray-300 rounded-xl bg-white focus:ring-2 focus:ring-cyan-500 outline-none shadow-sm"
+              onChange={handleChange}
+            />
+          </div>
+
+          {/* DAY AUTO */}
+          {form.day && (
+            <p className="text-right text-cyan-700 font-bold text-lg">
+              اليوم المختار: {form.day}
+            </p>
+          )}
+
+          {/* NOTES */}
+          <div>
+            <label className="block mb-2 font-semibold text-gray-700 text-right">
+              ملاحظات (اختياري)*
+            </label>
+            <textarea
+              name="notes"
+              placeholder="معلومات إضافية…"
+              className="w-full p-3 border border-gray-300 rounded-xl bg-gray-50 focus:ring-2 focus:ring-cyan-500 outline-none min-h-[140px] shadow-sm"
+              onChange={handleChange}
+            ></textarea>
+          </div>
+
+          {/* BUTTON */}
+          <button className="w-full bg-green-600 hover:bg-green-700 cursor-pointer text-white p-4 rounded-xl font-bold text-xl transition shadow-lg active:scale-95">
+            احجز الآن
+          </button>
+
+          {/* TRACK */}
+          <p
+            className="text-center text-cyan-700 font-bold cursor-pointer hover:underline"
+            onClick={() => (window.location.href = "/track")}
+          >
+            متابعة الحجز
+          </p>
+
+        </form>
+      </div>
+
     </div>
   );
+
+
 }
